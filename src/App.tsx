@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.scss";
+import Card from "./Card";
+import Header from "./Header";
+import Person from "./Person";
 
 function App() {
+  let [fetchedData, updateFetchedData] = useState([]);
+  let api = `https://rickandmortyapi.com/api/character/`;
+  let { results }: any = fetchedData;
+
+  useEffect(() => {
+    (async function () {
+      let data = await fetch(api).then((res) => res.json());
+      updateFetchedData(data);
+    })();
+  }, [api]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+
+        <Routes>
+          <Route path="/" element={<Card results={results} />} />
+          <Route path="/person/:id" element={<Person />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
