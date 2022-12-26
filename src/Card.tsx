@@ -15,7 +15,7 @@ function Card({ results }: Props) {
               } else if (x.status === "Alive") {
                 return <h5 style={{ background: "green" }}>{x.status}</h5>;
               } else {
-                return <h5 style={{ background: "blue" }}>{x.status}</h5>;
+                return <h5 style={{ background: "gray" }}>{x.status}</h5>;
               }
             })()}
             <img src={`${x.image}`} alt="" />
